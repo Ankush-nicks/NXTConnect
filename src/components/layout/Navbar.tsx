@@ -25,9 +25,11 @@ const Navbar = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <span className="text-xl font-bold bg-gradient-to-r from-brand-blue to-brand-teal bg-clip-text text-transparent">
-                NxtConnect
-              </span>
+              <img 
+                src="/lovable-uploads/c7092aef-e084-4e95-b8ba-62b49cd10fa3.png" 
+                alt="NxtConnect Logo" 
+                className="h-10 w-auto" 
+              />
             </Link>
           </div>
 

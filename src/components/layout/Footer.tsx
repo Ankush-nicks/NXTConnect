@@ -9,8 +9,12 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
-            <div className="text-xl font-bold bg-gradient-to-r from-brand-blue to-brand-teal bg-clip-text text-transparent mb-4">
-              NxtConnect
+            <div className="flex items-center mb-4">
+              <img 
+                src="/lovable-uploads/c7092aef-e084-4e95-b8ba-62b49cd10fa3.png" 
+                alt="NxtConnect Logo" 
+                className="h-12 w-auto" 
+              />
             </div>
             <p className="text-gray-600 max-w-md">
               Empowering learners to build skills, grow their personal brand, and connect with mentors in a supportive community.

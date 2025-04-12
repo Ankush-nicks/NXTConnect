@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="text-xl font-bold bg-gradient-to-r from-brand-blue to-brand-teal bg-clip-text text-transparent mb-4">
-              CreatorCollective
+              NxtConnect
             </div>
             <p className="text-gray-600 max-w-md">
               Empowering learners to build skills, grow their personal brand, and connect with mentors in a supportive community.
@@ -85,7 +85,7 @@ const Footer = () => {
         </div>
         <div className="mt-12 border-t border-gray-200 pt-8">
           <p className="text-gray-400 text-sm text-center">
-            &copy; {new Date().getFullYear()} CreatorCollective. All rights reserved.
+            &copy; {new Date().getFullYear()} NxtConnect. All rights reserved.
           </p>
         </div>
       </div>

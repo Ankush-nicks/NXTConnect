@@ -26,7 +26,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
               <span className="text-xl font-bold bg-gradient-to-r from-brand-blue to-brand-teal bg-clip-text text-transparent">
-                CreatorCollective
+                NxtConnect
               </span>
             </Link>
           </div>
@@ -58,7 +58,7 @@ const Navbar = () => {
                   <Button variant="ghost">Log In</Button>
                 </Link>
                 <Link to="/auth/register">
-                  <Button className="bg-brand-blue hover:bg-blue-700">Sign Up</Button>
+                  <Button className="bg-brand-blue hover:bg-blue-700 text-white">Sign Up</Button>
                 </Link>
               </>
             )}

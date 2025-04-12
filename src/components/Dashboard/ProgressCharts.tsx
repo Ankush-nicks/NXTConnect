@@ -36,7 +36,7 @@ const COLORS = ['#2563eb', '#0d9488', '#f97316', '#8b5cf6', '#ec4899'];
 const ProgressCharts = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <Card>
+      <Card className="h-full">
         <CardHeader>
           <CardTitle>Learning Progress</CardTitle>
           <CardDescription>Your course completion over time</CardDescription>
@@ -68,7 +68,7 @@ const ProgressCharts = () => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="h-full">
         <CardHeader>
           <CardTitle>Projects by Category</CardTitle>
           <CardDescription>Distribution of your projects</CardDescription>
@@ -96,7 +96,7 @@ const ProgressCharts = () => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="h-full">
         <CardHeader>
           <CardTitle>Skill Proficiency</CardTitle>
           <CardDescription>Your self-assessed skill levels</CardDescription>
@@ -118,7 +118,7 @@ const ProgressCharts = () => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="h-full">
         <CardHeader>
           <CardTitle>Monthly Activity</CardTitle>
           <CardDescription>Your engagement with the platform</CardDescription>

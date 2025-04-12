@@ -49,7 +49,7 @@ const features = [
 
 const Features = () => {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-12 sm:py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
@@ -60,14 +60,14 @@ const Features = () => {
           </p>
         </div>
 
-        <div className="mt-16">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 sm:mt-16">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((feature) => (
               <div
                 key={feature.name}
-                className="relative rounded-2xl border border-gray-200 p-8 shadow-sm hover:shadow-md transition-shadow card-shadow"
+                className="relative rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow card-shadow h-full"
               >
-                <div className={`absolute top-8 left-8 ${feature.bgColor} rounded-md p-2`}>
+                <div className={`absolute top-6 sm:top-8 left-6 sm:left-8 ${feature.bgColor} rounded-md p-2`}>
                   <feature.icon className={`h-6 w-6 ${feature.color}`} aria-hidden="true" />
                 </div>
                 <div className="mt-8 pt-4">

@@ -59,9 +59,9 @@ const SuccessStories = () => {
         <Button variant="outline">Share Your Success</Button>
       </div>
       
-      <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {successStories.map((story) => (
-          <Card key={story.id} className="hover:shadow-md transition-shadow">
+          <Card key={story.id} className="hover:shadow-md transition-shadow h-full">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex items-center space-x-4">
@@ -71,7 +71,7 @@ const SuccessStories = () => {
                   </Avatar>
                   <div>
                     <CardTitle className="text-xl">{story.title}</CardTitle>
-                    <CardDescription className="flex items-center mt-1">
+                    <CardDescription className="flex flex-wrap items-center mt-1">
                       <span className="font-medium text-gray-700">{story.user.name}</span>
                       <span className="mx-2">•</span>
                       <span className="text-gray-500">{story.user.role}</span>

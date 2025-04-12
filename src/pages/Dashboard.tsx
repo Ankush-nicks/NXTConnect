@@ -1,14 +1,30 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ProgressCharts from '@/components/Dashboard/ProgressCharts';
 import SuccessStories from '@/components/Dashboard/SuccessStories';
+import CourseTracker from '@/components/Dashboard/CourseTracker';
+import MentorshipScheduler from '@/components/Dashboard/MentorshipScheduler';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Award, BookOpen, Check, Target } from 'lucide-react';
+import { useAuth } from '@/components/Auth/AuthProvider';
+import { toast } from 'sonner';
 
 const Dashboard = () => {
+  const { user, loading } = useAuth();
+
+  useEffect(() => {
+    if (user && !loading) {
+      toast.success(`Welcome back, ${user.user_metadata.first_name || 'User'}!`);
+    }
+  }, [user, loading]);
+
+  if (loading) {
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Navbar />
@@ -145,6 +161,16 @@ const Dashboard = () => {
                 </div>
               </CardContent>
             </Card>
+          </div>
+
+          {/* Course Tracker */}
+          <div className="mb-8">
+            <CourseTracker />
+          </div>
+
+          {/* Mentorship Scheduler */}
+          <div className="mb-8">
+            <MentorshipScheduler />
           </div>
 
           <Tabs defaultValue="progress" className="mb-8">

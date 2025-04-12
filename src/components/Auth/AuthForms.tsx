@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 
 interface AuthFormsProps {
   activeTab?: 'login' | 'register';
@@ -15,19 +16,80 @@ interface AuthFormsProps {
 const AuthForms = ({ activeTab = 'login' }: AuthFormsProps) => {
   const navigate = useNavigate();
   const [tab, setTab] = useState<'login' | 'register'>(activeTab);
-
-  const handleLogin = (e: React.FormEvent) => {
+  const [loading, setLoading] = useState(false);
+  
+  // Form states
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, simulate successful login
-    toast.success("Logged in successfully!");
-    navigate('/dashboard');
+    
+    if (!email || !password) {
+      toast.error('Please fill in all fields');
+      return;
+    }
+    
+    try {
+      setLoading(true);
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      
+      if (error) {
+        throw error;
+      }
+      
+      toast.success("Logged in successfully!");
+      navigate('/dashboard');
+    } catch (error: any) {
+      toast.error(error.message || 'An error occurred during login');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, simulate successful registration
-    toast.success("Registered successfully! Please check your email for verification.");
-    navigate('/dashboard');
+    
+    if (!email || !password || !confirmPassword || !firstName || !lastName) {
+      toast.error('Please fill in all fields');
+      return;
+    }
+    
+    if (password !== confirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    }
+    
+    try {
+      setLoading(true);
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName
+          }
+        }
+      });
+      
+      if (error) {
+        throw error;
+      }
+      
+      toast.success("Registration successful! Please check your email for verification.");
+      navigate('/dashboard');
+    } catch (error: any) {
+      toast.error(error.message || 'An error occurred during registration');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -55,7 +117,14 @@ const AuthForms = ({ activeTab = 'login' }: AuthFormsProps) => {
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="Enter your email" required />
+                    <Input 
+                      id="email" 
+                      type="email" 
+                      placeholder="Enter your email" 
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required 
+                    />
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
@@ -64,9 +133,18 @@ const AuthForms = ({ activeTab = 'login' }: AuthFormsProps) => {
                         Forgot password?
                       </Link>
                     </div>
-                    <Input id="password" type="password" placeholder="••••••••" required />
+                    <Input 
+                      id="password" 
+                      type="password" 
+                      placeholder="••••••••" 
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required 
+                    />
                   </div>
-                  <Button type="submit" className="w-full">Sign In</Button>
+                  <Button type="submit" className="w-full" disabled={loading}>
+                    {loading ? 'Signing in...' : 'Sign In'}
+                  </Button>
                 </div>
               </form>
             </TabsContent>
@@ -77,26 +155,61 @@ const AuthForms = ({ activeTab = 'login' }: AuthFormsProps) => {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="firstName">First Name</Label>
-                      <Input id="firstName" placeholder="John" required />
+                      <Input 
+                        id="firstName" 
+                        placeholder="John" 
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        required 
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" placeholder="Doe" required />
+                      <Input 
+                        id="lastName" 
+                        placeholder="Doe" 
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        required 
+                      />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="john@example.com" required />
+                    <Label htmlFor="registerEmail">Email</Label>
+                    <Input 
+                      id="registerEmail" 
+                      type="email" 
+                      placeholder="john@example.com" 
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required 
+                    />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="password">Password</Label>
-                    <Input id="password" type="password" placeholder="••••••••" required />
+                    <Label htmlFor="registerPassword">Password</Label>
+                    <Input 
+                      id="registerPassword" 
+                      type="password" 
+                      placeholder="••••••••" 
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required 
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="confirmPassword">Confirm Password</Label>
-                    <Input id="confirmPassword" type="password" placeholder="••••••••" required />
+                    <Input 
+                      id="confirmPassword" 
+                      type="password" 
+                      placeholder="••••••••" 
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required 
+                    />
                   </div>
-                  <Button type="submit" className="w-full">Create Account</Button>
+                  <Button type="submit" className="w-full" disabled={loading}>
+                    {loading ? 'Creating Account...' : 'Create Account'}
+                  </Button>
                 </div>
               </form>
             </TabsContent>
